@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+  <meta name="theme-color" content="#0b1220" />
+  <meta name="description" content="Versión visual premium con la base funcional corregida, lista para Netlify." />
+  <title>Luxe Orbit Browser</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop stop-color='%236bb7ff'/%3E%3Cstop offset='1' stop-color='%238f73ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%2306101d'/%3E%3Cpath d='M14 32c0-10 8-18 18-18 8.4 0 15.5 5.7 17.7 13.5h-8.2A10.5 10.5 0 0 0 22 32a10.5 10.5 0 0 0 19.5 5.4h8.2C47.5 45.3 40.4 51 32 51c-10 0-18-8-18-19Z' fill='url(%23g)'/%3E%3Ccircle cx='46' cy='18' r='5' fill='%2367f0d1'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="theme-midnight">
+  <div class="ambient"><i></i></div>
+  <div class="mesh"></div>
+  <div class="stars"></div>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
+
+  <div class="app-shell">
+    <header class="topbar glass">
+      <div class="top-left">
+        <div class="traffic-group">
+          <button class="traffic red" id="trafficClose" title="Cerrar pestaña e ir al inicio"></button>
+          <button class="traffic yellow" id="trafficCompact" title="Modo compacto"></button>
+          <button class="traffic green" id="trafficFullscreen" title="Pantalla completa"></button>
+        </div>
+        <button class="hamburger icon-btn" id="hamburgerBtn" aria-label="Abrir menú">
+          <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"></path></svg>
+        </button>
+        <div class="brand">
+          <div class="brand-logo">
+            <span></span>
+          </div>
+          <div>
+            <h1>Luxe Orbit Browser</h1>
+            <p id="brandMeta">Mismo look premium · base funcional corregida · historial temporal</p>
+          </div>
+        </div>
+      </div>
+      <div class="top-right">
+        <div class="status-chip"><span class="pulse"></span><span id="netStatus">Sesión temporal activa</span></div>
+        <button class="profile-chip" id="accountQuickBtn">
+          <span class="profile-avatar" id="profileAvatarTop">I</span>
+          <span id="profileNameTop">Invitado</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="toolbar glass">
+      <div class="nav-actions left-actions">
+        <button class="icon-btn" id="backBtn" title="Atrás">
+          <svg viewBox="0 0 24 24"><path d="m14 7-5 5 5 5 1.4-1.4-3.6-3.6 3.6-3.6z"></path></svg>
+        </button>
+        <button class="icon-btn" id="forwardBtn" title="Adelante">
+          <svg viewBox="0 0 24 24"><path d="m10 17 5-5-5-5-1.4 1.4 3.6 3.6-3.6 3.6z"></path></svg>
+        </button>
+        <button class="icon-btn" id="reloadBtn" title="Recargar">
+          <svg viewBox="0 0 24 24"><path d="M17.7 6.3A7.94 7.94 0 0 0 12 4a8 8 0 1 0 7.9 9h-2.1A6 6 0 1 1 12 6c1.7 0 3.3.7 4.4 1.9L14 10h6V4z"></path></svg>
+        </button>
+        <button class="icon-btn" id="homeBtn" title="Inicio">
+          <svg viewBox="0 0 24 24"><path d="M12 5.7 4 12v8h5v-5h6v5h5v-8z"></path></svg>
+        </button>
+      </div>
+
+      <form class="omnibox glass-strong" id="navForm" autocomplete="off">
+        <span class="mode-pill" id="modeBadge">Web</span>
+        <button type="button" class="engine-chip" id="engineBadgeBtn" title="Motor de búsqueda activo">
+          <span class="engine-logo engine-google" id="engineLogoMark">G</span>
+          <span class="engine-name" id="engineLogoName">Google</span>
+        </button>
+        <input id="omniboxInput" type="text" placeholder="Busca o pega una URL" spellcheck="false" />
+        <button type="button" class="icon-btn small" id="voiceBtn" title="Buscar por voz">
+          <svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 0 0 3-3V7a3 3 0 1 0-6 0v5a3 3 0 0 0 3 3m5-3a1 1 0 1 1 2 0 7 7 0 0 1-6 6.93V21h3a1 1 0 1 1 0 2H8a1 1 0 1 1 0-2h3v-2.07A7 7 0 0 1 5 12a1 1 0 1 1 2 0 5 5 0 1 0 10 0"></path></svg>
+        </button>
+        <button type="button" class="icon-btn small" id="speakBtn" title="Leer en voz">
+          <svg viewBox="0 0 24 24"><path d="M3 10v4h4l5 4V6L7 10zm13.5 2a3.5 3.5 0 0 0-2.1-3.2v6.4A3.5 3.5 0 0 0 16.5 12m0-7.5v2.1A5.5 5.5 0 0 1 20 12a5.5 5.5 0 0 1-3.5 5.4v2.1A7.5 7.5 0 0 0 22 12a7.5 7.5 0 0 0-5.5-7.5"></path></svg>
+        </button>
+        <button type="submit" class="go-btn">Ir</button>
+      </form>
+
+      <div class="nav-actions right-actions">
+        <button class="soft-btn" id="audioBtn"><span id="audioLabel">Audio off</span></button>
+        <button class="soft-btn" id="floatBtn">Flotante</button>
+        <button class="soft-btn primary" id="outsideBtn">Abrir afuera</button>
+      </div>
+      <div class="suggestions glass hidden" id="suggestionsBox"></div>
+    </section>
+
+    <section class="tabbar glass">
+      <div class="tabs" id="tabs"></div>
+      <div class="tab-actions">
+        <button class="mode-chip active" data-mode="web">Web</button>
+        <button class="mode-chip" data-mode="images">Imágenes</button>
+        <button class="mode-chip" data-mode="videos">Videos</button>
+        <button class="mode-chip" data-mode="news">Noticias</button>
+        <button class="mode-chip" data-mode="maps">Mapas</button>
+        <button class="mode-chip" id="newTabBtn">+ Pestaña</button>
+      </div>
+    </section>
+
+    <main class="main-grid">
+      <aside class="sidebar glass" id="sidebar">
+        <section class="side-card spotlight">
+          <div class="side-card-head">
+            <h2>Cuenta</h2>
+            <button class="mini-btn" id="openAuthBtn">Entrar</button>
+          </div>
+          <div class="account-box">
+            <div class="profile-avatar large" id="profileAvatarSide">I</div>
+            <div>
+              <strong id="profileNameSide">Invitado</strong>
+              <p id="profileHint">Tus ajustes sí se guardan. El historial no.</p>
+            </div>
+          </div>
+          <div class="stack-row">
+            <button class="soft-btn primary" id="settingsBtn">Ajustes</button>
+            <button class="soft-btn danger hidden" id="logoutBtn">Salir</button>
+          </div>
+        </section>
+
+        <section class="side-card">
+          <div class="side-card-head">
+            <h2>Session</h2>
+            <button class="mini-btn" id="clearSessionBtn">Limpiar</button>
+          </div>
+          <div class="metrics">
+            <div class="metric"><span>Pestañas</span><strong id="metricTabs">1</strong></div>
+            <div class="metric"><span>Historial</span><strong id="metricHistory">0</strong></div>
+            <div class="metric"><span>Motor</span><strong id="metricEngine">Google</strong></div>
+            <div class="metric"><span>Tema</span><strong id="metricTheme">Midnight</strong></div>
+          </div>
+        </section>
+
+        <section class="side-card">
+          <div class="side-card-head">
+            <h2>Historial</h2>
+            <button class="mini-btn" id="clearHistoryBtn">Borrar</button>
+          </div>
+          <div class="mini-list" id="historyList"></div>
+        </section>
+
+        <section class="side-card">
+          <div class="side-card-head">
+            <h2>Favoritos de sesión</h2>
+            <button class="mini-btn" id="bookmarkBtn">+</button>
+          </div>
+          <div class="mini-list" id="bookmarkList"></div>
+        </section>
+      </aside>
+
+      <section class="viewer glass">
+        <div class="viewer-header">
+          <div>
+            <h3 id="pageTitle">Inicio</h3>
+            <p id="pageUrl">Panel principal</p>
+          </div>
+          <div class="viewer-tools">
+            <div class="viewer-engine-badge hidden" id="viewerEngineBadge">
+              <span class="engine-logo engine-google large" id="viewerEngineLogo">G</span>
+              <div class="viewer-engine-copy">
+                <strong id="viewerEngineName">Google</strong>
+                <small id="viewerEngineMode">Web</small>
+              </div>
+            </div>
+            <button class="soft-btn" id="duplicateBtn">Duplicar</button>
+            <button class="soft-btn" id="shareBtn">Copiar</button>
+          </div>
+        </div>
+        <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+        <div class="viewer-body" id="viewerBody">
+          <div class="home-screen" id="homeScreen">
+            <section class="hero-card luxe-hero">
+              <div class="hero-left">
+                <div class="hero-badges">
+                  <span class="tiny-pill">Cuenta local</span>
+                  <span class="tiny-pill">Audio</span>
+                  <span class="tiny-pill">Responsive</span>
+                  <span class="tiny-pill">Motores</span>
+                </div>
+                <h2 id="heroTitle">Mismo estilo, mejor por dentro</h2>
+                <p id="heroText">Conserva la vibra premium del diseño que te gustó, pero ahora montado sobre una base más limpia y funcional.</p>
+                <div class="hero-actions">
+                  <button class="soft-btn primary" id="heroSearchBtn">Empezar</button>
+                  <button class="soft-btn" id="heroAccountBtn">Mi cuenta</button>
+                  <button class="soft-btn" id="heroSettingsBtn">Personalizar</button>
+                </div>
+              </div>
+              <div class="hero-right">
+                <div class="window-mock">
+                  <div class="window-top">
+                    <span class="window-dot red"></span>
+                    <span class="window-dot yellow"></span>
+                    <span class="window-dot green"></span>
+                    <div class="window-bar">luxe orbit · busca o pega un link</div>
+                  </div>
+                  <div class="window-body">
+                    <div class="window-row"></div>
+                    <div class="window-row short"></div>
+                    <div class="window-row"></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel-grid">
+              <article class="panel-card">
+                <div class="panel-top"><span class="panel-icon">🔎</span><strong>Busca como quieras</strong></div>
+                <p>Web, imágenes, videos, noticias y mapas con una vista más elegante.</p>
+                <div class="panel-tags">
+                  <span>Google</span><span>Bing</span><span>DuckDuckGo</span><span>Brave</span>
+                </div>
+              </article>
+              <article class="panel-card">
+                <div class="panel-top"><span class="panel-icon">🎙</span><strong>Buscar por voz</strong></div>
+                <p>El botón de micrófono y la lectura quedan integrados al diseño premium.</p>
+                <div class="panel-tags"><span>Voz</span><span>Lectura</span><span>Audio UI</span></div>
+              </article>
+              <article class="panel-card">
+                <div class="panel-top"><span class="panel-icon">⚙</span><strong>Ajustes reales</strong></div>
+                <p>Motor, tema, tamaño, apertura y densidad visual guardados por cuenta.</p>
+                <div class="panel-tags"><span>Guardados</span><span>Por cuenta</span></div>
+              </article>
+              <article class="panel-card">
+                <div class="panel-top"><span class="panel-icon">⧉</span><strong>Dentro y fuera</strong></div>
+                <p>Abre en flotante, por fuera o mantente dentro del navegador-app.</p>
+                <div class="panel-tags"><span>Float</span><span>Pestaña nueva</span></div>
+              </article>
+            </section>
+
+            <section class="quick-grid" id="shortcutGrid"></section>
+          </div>
+
+          <div class="search-screen hidden" id="searchScreen"></div>
+
+          <div class="frame-wrap hidden" id="frameWrap">
+            <iframe id="webFrame" class="web-frame" referrerpolicy="no-referrer"></iframe>
+            <div class="frame-overlay hidden" id="frameOverlay">
+              <div class="overlay-card glass">
+                <h3>Esta página puede bloquear el visor interno</h3>
+                <p>Usa abrir afuera o ventana flotante para seguir sin romper la experiencia.</p>
+                <div class="overlay-actions">
+                  <button class="soft-btn primary" id="overlayOutsideBtn">Abrir afuera</button>
+                  <button class="soft-btn" id="overlayFloatBtn">Ventana flotante</button>
+                  <button class="soft-btn" id="overlayHomeBtn">Inicio</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="statusbar glass">
+      <div class="status-left">
+        <span id="footerStatus">Listo</span>
+        <span>Modo: <strong id="footerMode">Web</strong></span>
+      </div>
+      <div class="status-right">
+        <span id="clockText"></span>
+        <span>Perfil: <strong id="footerProfile">Invitado</strong></span>
+      </div>
+    </footer>
+  </div>
+
+  <aside class="drawer hidden" id="menuDrawer" aria-hidden="true">
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+    <div class="drawer-panel glass">
+      <div class="drawer-head">
+        <div>
+          <strong>Menú</strong>
+          <small>El mismo look, con ajustes reales y base más estable</small>
+        </div>
+        <button class="mini-btn" id="closeDrawerBtn">✕</button>
+      </div>
+      <div class="drawer-content">
+        <section class="drawer-section">
+          <h3>Acciones rápidas</h3>
+          <div class="drawer-grid">
+            <button class="menu-btn" data-menu-action="new-tab">Nueva pestaña</button>
+            <button class="menu-btn" data-menu-action="home">Ir a inicio</button>
+            <button class="menu-btn" data-menu-action="voice">Buscar por voz</button>
+            <button class="menu-btn" data-menu-action="float">Ventana flotante</button>
+            <button class="menu-btn" data-menu-action="outside">Abrir afuera</button>
+            <button class="menu-btn" data-menu-action="clear-session">Limpiar sesión</button>
+          </div>
+        </section>
+
+        <section class="drawer-section">
+          <h3>Cuenta</h3>
+          <div class="drawer-grid">
+            <button class="menu-btn" data-menu-action="account">Entrar / crear</button>
+            <button class="menu-btn" data-menu-action="logout">Salir de cuenta</button>
+          </div>
+        </section>
+
+        <section class="drawer-section">
+          <h3>Ajustes guardados</h3>
+          <div class="settings-grid">
+            <label>Nombre visible<input id="setDisplayName" type="text" placeholder="Tu nombre" /></label>
+            <label>Tema
+              <select id="setTheme">
+                <option value="midnight">Midnight</option>
+                <option value="sunset">Sunset</option>
+                <option value="aurora">Aurora</option>
+                <option value="royal">Royal</option>
+              </select>
+            </label>
+            <label>Motor
+              <select id="setEngine"></select>
+            </label>
+            <label>Audio
+              <select id="setAudio">
+                <option value="off">Off</option>
+                <option value="ui">UI</option>
+                <option value="voice">Voz + UI</option>
+              </select>
+            </label>
+            <label>Apertura
+              <select id="setOpenBehavior">
+                <option value="smart">Inteligente</option>
+                <option value="inside">Dentro</option>
+                <option value="outside">Afuera</option>
+                <option value="float">Flotante</option>
+              </select>
+            </label>
+            <label>Modo por defecto
+              <select id="setDefaultMode">
+                <option value="web">Web</option>
+                <option value="images">Imágenes</option>
+                <option value="videos">Videos</option>
+                <option value="news">Noticias</option>
+                <option value="maps">Mapas</option>
+              </select>
+            </label>
+            <label>Vista
+              <select id="setDeviceMode">
+                <option value="auto">Auto</option>
+                <option value="desktop">Desktop</option>
+                <option value="tablet">Tablet</option>
+                <option value="mobile">Mobile</option>
+              </select>
+            </label>
+            <label>Tamaño <span id="fontValue">16px</span>
+              <input id="setFontSize" type="range" min="14" max="20" step="1" value="16" />
+            </label>
+            <label>Volumen <span id="volumeValue">45%</span>
+              <input id="setVolume" type="range" min="0" max="100" step="1" value="45" />
+            </label>
+            <label>Motor 2 automático
+              <select id="setFallbackOne"></select>
+            </label>
+            <label>Motor 3 automático
+              <select id="setFallbackTwo"></select>
+            </label>
+            <label>Motor 4 automático
+              <select id="setFallbackThree"></select>
+            </label>
+            <label>Espera para cambio <span id="fallbackDelayValue">4s</span>
+              <input id="setFallbackDelay" type="range" min="2" max="8" step="1" value="4" />
+            </label>
+            <label class="inline-check"><input id="setAutoEngineFallback" type="checkbox" checked /> Cambio automático de motor</label>
+            <label class="inline-check"><input id="setAlerts" type="checkbox" checked /> Alertas visibles</label>
+            <label class="inline-check"><input id="setCompact" type="checkbox" /> Compacto</label>
+            <label class="inline-check"><input id="setReduceMotion" type="checkbox" /> Reducir movimiento</label>
+            <label class="inline-check"><input id="setSidebar" type="checkbox" checked /> Panel lateral</label>
+          </div>
+          <div class="drawer-actions">
+            <button class="soft-btn" id="resetSettingsBtn">Restablecer</button>
+            <button class="soft-btn primary" id="saveSettingsBtn">Guardar ajustes</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </aside>
+
+  <section class="modal hidden" id="authModal">
+    <div class="modal-backdrop" id="authBackdrop"></div>
+    <div class="modal-card glass">
+      <div class="modal-head">
+        <div>
+          <strong id="authTitle">Crear cuenta</strong>
+          <small id="authSub">Guarda solo tu cuenta y tus ajustes.</small>
+        </div>
+        <button class="mini-btn" id="closeAuthBtn">✕</button>
+      </div>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-auth-mode="signup">Crear</button>
+        <button class="auth-tab" data-auth-mode="login">Entrar</button>
+      </div>
+      <div class="auth-fields">
+        <label>Usuario<input id="authUser" type="text" placeholder="usuario" /></label>
+        <label id="authNameWrap">Nombre visible<input id="authName" type="text" placeholder="cómo quieres verte" /></label>
+        <label>Contraseña<input id="authPass" type="password" placeholder="contraseña" /></label>
+        <label>Tema inicial
+          <select id="authTheme">
+            <option value="midnight">Midnight</option>
+            <option value="sunset">Sunset</option>
+            <option value="aurora">Aurora</option>
+            <option value="royal">Royal</option>
+          </select>
+        </label>
+        <label>Motor inicial
+          <select id="authEngine"></select>
+        </label>
+      </div>
+      <div class="saved-accounts" id="savedAccounts"></div>
+      <p class="auth-msg" id="authMsg"></p>
+      <div class="auth-actions">
+        <button class="soft-btn" id="guestBtn">Invitado</button>
+        <button class="soft-btn primary" id="authSubmitBtn">Crear cuenta</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="float-window glass hidden" id="floatWindow">
+    <div class="float-head">
+      <div>
+        <strong>Ventana flotante</strong>
+        <small id="floatUrl">Vista separada</small>
+      </div>
+      <div class="stack-row">
+        <button class="mini-btn" id="floatRefreshBtn">↻</button>
+        <button class="mini-btn" id="floatCloseBtn">✕</button>
+      </div>
+    </div>
+    <div class="float-body"><iframe id="floatFrame" referrerpolicy="no-referrer"></iframe></div>
+  </div>
+
+  <nav class="mobile-bar glass">
+    <button class="icon-btn" id="mobileMenuBtn" title="Menú">
+      <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"></path></svg>
+    </button>
+    <button class="icon-btn" id="mobileBackBtn" title="Atrás">
+      <svg viewBox="0 0 24 24"><path d="m14 7-5 5 5 5 1.4-1.4-3.6-3.6 3.6-3.6z"></path></svg>
+    </button>
+    <button class="soft-btn primary" id="mobileSearchBtn">Buscar</button>
+    <button class="icon-btn" id="mobileHomeBtn" title="Inicio">
+      <svg viewBox="0 0 24 24"><path d="M12 5.7 4 12v8h5v-5h6v5h5v-8z"></path></svg>
+    </button>
+    <button class="icon-btn" id="mobileFloatBtn" title="Flotante">
+      <svg viewBox="0 0 24 24"><path d="M5 5h8v2H7v6H5zm6 6h8v8h-8zm2 2v4h4v-4zM11 5h8v4h-2V7h-6z"></path></svg>
+    </button>
+  </nav>
+
+  <div class="toast-wrap" id="toastWrap"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
